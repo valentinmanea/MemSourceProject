@@ -1,0 +1,70 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "API definition for a simple MemSource application",
+    "version": "1.0.6",
+    "title": "Swagger Definition",
+    "contact": {
+      "email": "valentin.manea9696@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "basePath": "/v2",
+  "definitions": {
+    "UserConfigurationDto": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "MemSourceUserDto": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "object",
+          "properties": {
+            "userName": {
+              "type": "string"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            },
+            "firstName": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            }
+          }
+        },
+        "token": {
+          "type": "string"
+        },
+        "lastInvalidateAllSessionsPerformed": {
+          "type": "string",
+          "format": "nullable"
+        },
+        "expires": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
