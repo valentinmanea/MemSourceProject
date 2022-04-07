@@ -35,9 +35,4 @@ public class UserConfigurationController {
     public UserConfigurationDto getCurrentConfiguration() {
         return userConfigurationService.getCurrentConfiguration();
     }
-
-    @GetMapping("/projects")
-    public void gertProjects(){
-        userConfigurationService.getProjects();
-    }
 }

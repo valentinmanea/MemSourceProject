@@ -82,7 +82,7 @@
         type: "POST",
         url: "http://localhost:8080/",
         data: { 
-            username: $("[id$='username-save']").val(),
+            userName: $("[id$='username-save']").val(),
             password: $("[id$='password-save']").val() 
         },
         success: function(result) {
@@ -151,9 +151,9 @@ function checkCurrentConfiguration(withErorMessage){
         url: "http://localhost:8080/current",
         success: function(result) {
             $('#input-configuration').hide()
-        $('#current-configuration').show()
-            $("[id$='username']").val(result.userName);
-            $("[id$='password']").val(result.password);
+            $('#current-configuration').show()
+            $("[id$='username-update']").val(result.userName);
+            $("[id$='password-update']").val(result.password);
             console.log("Current conf: " + JSON.stringify(result));
         },
         error: function(result) {

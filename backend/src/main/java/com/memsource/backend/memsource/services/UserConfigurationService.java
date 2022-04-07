@@ -18,13 +18,10 @@ public class UserConfigurationService {
 
     private final UserConfigurationRepo userConfigurationRepo;
 
-    private final MemSourceProxyService memSourceProxyService;
-
     private final UserConfigurationMapper userConfigurationMapper = Mappers.getMapper(UserConfigurationMapper.class);
 
-    public UserConfigurationService(UserConfigurationRepo userConfigurationRepo, MemSourceProxyService memSourceProxyService) {
+    public UserConfigurationService(UserConfigurationRepo userConfigurationRepo) {
         this.userConfigurationRepo = userConfigurationRepo;
-        this.memSourceProxyService = memSourceProxyService;
     }
 
     public UserConfigurationEntity addUserConfiguration(UserConfigurationDto userConfigurationDto) {
@@ -54,11 +51,5 @@ public class UserConfigurationService {
         } else {
             return userConfigurationMapper.toUserConfigurationDto(all.get(0));
         }
-    }
-
-    public void getProjects() {
-        UserConfigurationDto currentConfiguration = getCurrentConfiguration();
-        String authToken = memSourceProxyService.getAuthToken(currentConfiguration);
-        memSourceProxyService.getProjects(authToken);
     }
 }
