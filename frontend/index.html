@@ -120,29 +120,11 @@ $("#button-update").click(function(e) {
 });
 
 $("#button-projects1").click(function(e) {
-        console.log("Ceva")
-    e.preventDefault();
-    $.ajax({
-        type: "GET",
-        url: "projects.html",
-        data: { },
-        success: function(data){
-            $('#main-container').html(data);
-        }
-    });
+    window.location="projects.html";
 });
 
 $("#button-projects2").click(function(e) {
-        console.log("Ceva")
-    e.preventDefault();
-    $.ajax({
-        type: "GET",
-        url: "projects.html",
-        data: { },
-        success: function(data){
-            $('#main-container').html(data);
-        }
-    });
+    window.location="projects.html";
 });
 
 function checkCurrentConfiguration(withErorMessage){

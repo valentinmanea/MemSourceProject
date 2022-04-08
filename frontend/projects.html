@@ -13,12 +13,27 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="style.css">
     </head>
-    <body>
+    <body onload="onLoad()">
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <button id="button-configuration" class="btn float-float-left login_btn">Configuration</button>
 
+        <div id="main-container" class="container" style="background: rgb(195, 255, 250);">
+            <button id="button-configuration" class="btn btn-warning float-float-left">Get back to configuration</button>
+
+            <h1 class="text-center font-weight-bold"> Projects page</h1>
+              
+            <div id="projects-container" class="container">
+
+                <h3 id="totalElements">Total Elements: </h3>
+                <h3 id="totalPages">Total Pages: </h3>
+
+                <h3 id="pageSize">Page size Elements: </h3>
+                <h3 id="pageNumber">Page numer: </h3>
+                <h3 id="numberOfElements">Number of elements:</h3>
+            </div>
+         
+          </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     </body>
@@ -27,5 +42,26 @@
         $("#button-configuration").click(function(e) {
             window.location="index.html";
         });
+
+    function onLoad(){
+        console.log("on load")
+        $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/projects",
+        success: function(result) {
+
+            console.log("Projects: " + JSON.stringify(result));
+        },
+        error: function(result) {
+            const projectsContainer = document.getElementById('projects-container');
+
+            console.log("a intrat pe error")
+            projectsContainer.style.visibility = 'hidden';
+
+            alert("No projects !");
+
+        }
+    });
+        }
     </script>
 </html>
