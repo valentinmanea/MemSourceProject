@@ -25,12 +25,7 @@
               
             <div id="projects-container" class="container">
 
-                <h3 id="totalElements">Total Elements: </h3>
-                <h3 id="totalPages">Total Pages: </h3>
-
-                <h3 id="pageSize">Page size Elements: </h3>
-                <h3 id="pageNumber">Page numer: </h3>
-                <h3 id="numberOfElements">Number of elements:</h3>
+                <textarea id="projects-area" class="projects-area"></textarea>
             </div>
          
           </div>
@@ -49,6 +44,7 @@
         type: "GET",
         url: "http://localhost:8080/projects",
         success: function(result) {
+            $("textarea#projects-area").val(JSON.stringify(result, null, 4));
 
             console.log("Projects: " + JSON.stringify(result));
         },
@@ -56,7 +52,7 @@
             const projectsContainer = document.getElementById('projects-container');
 
             console.log("a intrat pe error")
-            projectsContainer.style.visibility = 'hidden';
+            // projectsContainer.style.visibility = 'hidden';
 
             alert("No projects !");
 

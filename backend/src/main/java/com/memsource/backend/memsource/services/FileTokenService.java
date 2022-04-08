@@ -6,14 +6,19 @@ import io.codejournal.maven.swagger2java.model.UserConfigurationDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.TimeZone;
 import java.util.logging.Logger;
+
+import static java.time.ZoneOffset.UTC;
 
 @Service
 public class FileTokenService {
@@ -100,15 +105,21 @@ public class FileTokenService {
         return currentConfiguration.equals(userConfigurationDto);
     }
 
-    private boolean isTokenNotExpired() throws IOException {
-        FileTime creationTime = (FileTime) Files.getAttribute(filePath, "creationTime");
+    private boolean isTokenNotExpired() {
+        long lastModified = filePath.toFile().lastModified();
 
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now(UTC);
 
-        LocalDateTime convertedFileTime = LocalDateTime.ofInstant(creationTime.toInstant(), ZoneId.systemDefault());
+        LocalDateTime convertedFileTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(lastModified),UTC);
 
         long days = Duration.between(convertedFileTime.toLocalDate().atStartOfDay(), now.toLocalDate().atStartOfDay()).toDays();// another option
 
         return days < 1;
+    }
+
+    @PostConstruct
+    public void clearToken(){
+        boolean fileDeleted = filePath.toFile().delete();
+        LOGGER.info("Token file deleted ? "  + fileDeleted);
     }
 }

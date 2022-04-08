@@ -85,3 +85,9 @@ color: white;
 .links a{
 margin-left: 4px;
 }
+
+.projects-area{
+    resize: none !important;
+    width:100% !important;
+    height:500px;
+}
