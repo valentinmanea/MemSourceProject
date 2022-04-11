@@ -10,12 +10,9 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.attribute.FileTime;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.TimeZone;
 import java.util.logging.Logger;
 
 import static java.time.ZoneOffset.UTC;
@@ -35,6 +32,19 @@ public class FileTokenService {
     public FileTokenService(MemSourceProxyService memSourceProxyService, UserConfigurationService userConfigurationService) {
         this.memSourceProxyService = memSourceProxyService;
         this.userConfigurationService = userConfigurationService;
+    }
+
+    private static UserConfigurationDto convertArrayToUserConf(String[] tokenInformation) {
+        String userId = tokenInformation[1];
+
+        String userName = tokenInformation[2];
+
+        String password = tokenInformation[3];
+
+        return new UserConfigurationDto()
+                .id(Integer.parseInt(userId))
+                .userName(userName)
+                .password(password);
     }
 
     public String getToken() {
@@ -89,20 +99,9 @@ public class FileTokenService {
     }
 
     private boolean currentUserAssociatedWithToken(String[] tokenInformation) {
-        String userId = tokenInformation[1];
+        UserConfigurationDto userConfigurationDto = convertArrayToUserConf(tokenInformation);
 
-        String userName = tokenInformation[2];
-
-        String password = tokenInformation[3];
-
-        UserConfigurationDto userConfigurationDto = new UserConfigurationDto()
-                .id(Integer.parseInt(userId))
-                .userName(userName)
-                .password(password);
-
-        UserConfigurationDto currentConfiguration = userConfigurationService.getCurrentConfiguration();
-
-        return currentConfiguration.equals(userConfigurationDto);
+        return userConfigurationService.getCurrentConfiguration().equals(userConfigurationDto);
     }
 
     private boolean isTokenNotExpired() {
@@ -110,7 +109,7 @@ public class FileTokenService {
 
         LocalDateTime now = LocalDateTime.now(UTC);
 
-        LocalDateTime convertedFileTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(lastModified),UTC);
+        LocalDateTime convertedFileTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(lastModified), UTC);
 
         long days = Duration.between(convertedFileTime.toLocalDate().atStartOfDay(), now.toLocalDate().atStartOfDay()).toDays();// another option
 
@@ -118,8 +117,8 @@ public class FileTokenService {
     }
 
     @PostConstruct
-    public void clearToken(){
+    public void clearToken() {
         boolean fileDeleted = filePath.toFile().delete();
-        LOGGER.info("Token file deleted ? "  + fileDeleted);
+        LOGGER.info("Token file deleted at startup ? " + fileDeleted);
     }
 }

@@ -1,5 +1,5 @@
 Feature: Get projects
-  Optional description of the feature
+  Geeting the projects associated with a specific user configuration
 
   @Ready
   Scenario: 1 project retrieved

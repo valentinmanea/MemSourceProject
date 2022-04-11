@@ -1,6 +1,5 @@
 package com.memsource.backend.memsource.services;
 
-import com.memsource.backend.memsource.proxy.MemSourceProxyService;
 import com.memsource.backend.memsource.data.UserConfigurationEntity;
 import com.memsource.backend.memsource.exceptions.UserConfigurationAlreadyPresentException;
 import com.memsource.backend.memsource.exceptions.UserConfigurationNotPresent;
